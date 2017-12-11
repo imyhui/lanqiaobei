@@ -21,12 +21,18 @@ class StudentController extends Controller
             'stuId' => 'required',
             'language' => 'required',
             'mobile' => 'required',
-            'email' => 'required'
+            'email' => 'required',
+            'teacher' => 'required'
         ];
         $message=[
             'required' => 'The :attribute field is required.',
         ];
         $validator=Validator::make($request->all(),$rules,$message);
+        if ($validator->fails())
+            return response()->json([
+                'code' =>101,
+                'message'=> $validator->errors()
+            ]);
         $date=[];
         foreach ($rules as $key => $value)
         {
@@ -34,18 +40,28 @@ class StudentController extends Controller
         }
         $id=$this->studentService->isStudentExist($date['mobile']);
         if (!$id) {
-            $this->studentService->studentInsert($date);
-            return response()->json([
+            if ($this->studentService->studentInsert($date))
+                return response()->json([
                 'code' => 0,
                 'message' => 'insert success'
-            ]);
+                 ]);
+            else
+                return response()->json([
+                    'code' => 100,
+                    'message' => 'insert date error'
+                ]);
         }
         else {
-            $this->studentService->studentUpdate($id, $date);
-            return response()->json([
+            if ($this->studentService->studentUpdate($id, $date))
+                return response()->json([
                 'code' =>0,
                 'message' => 'update success'
             ]);
+            else
+                return response()->json([
+                    'code' => 0,
+                    'message' => 'update date error'
+                ]);
         }
 
     }

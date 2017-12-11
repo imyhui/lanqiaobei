@@ -25,9 +25,10 @@ class StudentService
     }
     public function studentUpdate($id,$date)
     {
-        DB::table('students')
-            ->where('id','=',$id)
-            ->update($date);
+        if (!DB::table('students')->where('id','=',$id)->update($date))
+            return true;
+        else
+            return false;
     }
 
 
