@@ -26,7 +26,7 @@ class StudentController extends Controller
         $message=[
             'required' => 'The :attribute field is required.',
         ];
-        Validator::make($request->all(),$rules,$message);
+        $validator=Validator::make($request->all(),$rules,$message);
         $date=[];
         foreach ($rules as $key => $value)
         {
