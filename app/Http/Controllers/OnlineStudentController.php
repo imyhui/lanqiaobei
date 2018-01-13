@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Service\StudentService;
+use App\Service\OnlineStudentService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class StudentController extends Controller
+class OnlineStudentController extends Controller
 {
     public $studentService;
-    public function __construct(StudentService $studentService)
+    public function __construct(OnlineStudentService $studentService)
     {
         $this->studentService=$studentService;
     }
@@ -18,7 +18,7 @@ class StudentController extends Controller
         $rules=[
             'name' => 'required',
             'sex' => 'required',
-            'stuId' => 'required',
+            'school' => 'required',
             'email' => 'required',
             'mobile' => 'required',
             'department' => 'required',
@@ -47,9 +47,9 @@ class StudentController extends Controller
         if (!$id) {
             if ($this->studentService->studentInsert($date))
                 return response()->json([
-                'code' => 0,
-                'message' => 'insert success'
-                 ]);
+                    'code' => 0,
+                    'message' => 'insert success'
+                ]);
             else
                 return response()->json([
                     'code' => 100,
@@ -59,9 +59,9 @@ class StudentController extends Controller
         else {
             if ($this->studentService->studentUpdate($id, $date))
                 return response()->json([
-                'code' =>0,
-                'message' => 'update success'
-            ]);
+                    'code' =>0,
+                    'message' => 'update success'
+                ]);
             else
                 return response()->json([
                     'code' => 0,

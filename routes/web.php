@@ -14,4 +14,5 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::post('/Student/post','StudentController@formPost');
+Route::post('/SchoolStudent/post','StudentController@formPost');
+Route::post('/OutsideStudent/post','OnlineStudentController@formPost');
