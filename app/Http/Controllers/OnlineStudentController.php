@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Service\OnlineStudentService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Excel;
+use App\OnlineStudent;
 
 class OnlineStudentController extends Controller
 {
@@ -69,5 +71,46 @@ class OnlineStudentController extends Controller
                 ]);
         }
 
+    }
+    public function exportStudent(Request $request)
+    {
+        if ($request->password != "neuqAcm111") {
+            return response()->json([
+                'code' => '10000',
+                'message' => '密码错误'
+            ]);
+        } else {
+            $data = OnlineStudent::all();
+            $title = [
+                'id',
+                'name',
+                'sex',
+                'school',
+                'email',
+                'mobile',
+                'department',
+                'major',
+                'chuankeId',
+                'orderId',
+                'refundType',
+                'refundId',
+                'ojId',
+                'created_at',
+                'updated_at'
+            ];
+            $cellData[] = $title;
+            foreach ($data as $student) {
+                $rowdata = [];
+                foreach ($title as $key) {
+                    $rowdata[] = $student[$key];
+                }
+                $cellData[] = $rowdata;
+            }
+            Excel::create('蓝桥杯寒假培训外校报名表', function ($excel) use ($cellData) {
+                $excel->sheet('score', function ($sheet) use ($cellData) {
+                    $sheet->rows($cellData);
+                });
+            })->export('xls');
+        }
     }
 }

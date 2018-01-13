@@ -16,3 +16,5 @@ Route::get('/', function () {
 });
 Route::post('/SchoolStudent/post','StudentController@formPost');
 Route::post('/OutsideStudent/post','OnlineStudentController@formPost');
+Route::get('/SchoolStudent/export','StudentController@exportStudent');
+Route::get('/OutsideStudent/export','OnlineStudentController@exportStudent');
