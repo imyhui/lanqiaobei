@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class StudentService
@@ -9,6 +10,8 @@ class StudentService
 
     public function studentInsert($date)
     {
+        $time = new Carbon();
+        $date['created_at'] = $time;
         if (DB::table('students')->insert($date))
             return true;
         else
@@ -25,7 +28,9 @@ class StudentService
     }
     public function studentUpdate($id,$date)
     {
-        if (!DB::table('students')->where('id','=',$id)->update($date))
+        $time = new Carbon();
+        $date['updated_at'] = $time;
+        if (DB::table('students')->where('id','=',$id)->update($date))
             return true;
         else
             return false;
