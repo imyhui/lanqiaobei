@@ -17,6 +17,7 @@ class StudentController extends Controller
     {
         $rules=[
             'name' => 'required',
+            'sex' => 'required',
             'major' => 'required',
             'stuId' => 'required',
             'language' => 'required',
