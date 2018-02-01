@@ -22,8 +22,8 @@ class CreateStudentsTable extends Migration
             $table->string('mobile');
             $table->string('department');
             $table->string('major');
-            $table->string('chuankeId');
-            $table->string('orderId');
+            $table->string('wangyiId');
+            $table->string('qqId');
             $table->string('refundType');
             $table->string('refundId');
             $table->string('ojId');
